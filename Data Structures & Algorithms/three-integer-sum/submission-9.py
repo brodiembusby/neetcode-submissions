@@ -1,0 +1,37 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+
+        triplets = []
+        # Sort from smallest to largest
+        nums.sort()
+        
+        for i in range(len(nums) -2):
+            #skip duplicate i's
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            if nums[i] > 0:
+                break
+            left = i + 1
+            right = len(nums) - 1 
+
+            while left < right:
+              
+                is_zero = nums[i] + nums[left] + nums[right]
+                
+                if is_zero == 0:
+                    triplets.append([nums[i], nums[left], nums[right]])
+                    # skip duplicate lefts
+                    while left < right and nums[left] == nums[left + 1]:
+                            left += 1
+                    # skip duplicate right
+                    while left < right and nums[right] == nums[right - 1]:
+                            right -= 1
+                # Move pointer based on how total from is_zero
+                # 5 bigger than 0 so we want smaller so we move right pointer
+                # -2 smaller than 0 so we want bigger so we move left pointer
+                if is_zero < 0:
+                    left += 1
+                else:
+                    right -= 1
+                    
+        return triplets
